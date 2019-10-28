@@ -9,10 +9,10 @@ function FormatSpots(props) {
     return (<h3 className="text--light">no spots remaining</h3>)
   }
   if (spotsLeft === 1) {
-    return (<h3 className="text--light">one spot remaining</h3>)
+    return (<h3 className="text--light">1 spot remaining</h3>)
   }
   if (spotsLeft === 2) {
-    return (<h3 className="text--light">two spots remaining</h3>)
+    return (<h3 className="text--light">2 spots remaining</h3>)
   }
     return (<h3 className="text--light">{props.spots}</h3>)
 }
