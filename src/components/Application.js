@@ -1,29 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
-import "components/Application.scss";
-
 import DayList from "components/DayList";
 import Appointment from "components/Appointment";
-
-// fake data for testing DayList component
-const days = [
-  {
-    id: 1,
-    name: "Monday",
-    spots: 2,
-  },
-  {
-    id: 2,
-    name: "Tuesday",
-    spots: 5,
-  },
-  {
-    id: 3,
-    name: "Wednesday",
-    spots: 0,
-  },
-];
+import "components/Application.scss";
 
 //test appointment data
 const appointments = [
@@ -44,7 +23,7 @@ const appointments = [
     }
   },
   {
-    id: 2,
+    id: 12,
     time: "6pm",
     interview: {
       student: "Gang gang",
@@ -56,7 +35,7 @@ const appointments = [
     }
   },
   {
-    id: 2,
+    id: 84,
     time: "7pm",
     interview: {
       student: "Y E E T",
@@ -74,6 +53,13 @@ export default function Application(props) {
     return (<Appointment key={appointment.id} {...appointment} />)
   })
   const [day, setDay] = useState("Monday");
+  const [days, setDays] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:8001/api/days").then((response) => {
+      setDays(response.data);
+    })
+  }, [])
 
   return (
     <main className="layout">
