@@ -19,6 +19,26 @@ export function getAppointmentsForDay(state, day) {
   return result;
 }
 
+export function getInterviewersForDay(state, day) {
+  const result = [];
+
+  const dayArray = state.days.filter(item => item.name === day);
+
+  //return the empty result array if no interviewers on a given day
+  if (dayArray.length === 0) {
+    return result;
+  }
+
+  //when id matches, push appt object to the to the result array
+  dayArray[0].interviewers.map(id => {
+    if (state.interviewers[id]) {
+      result.push(state.interviewers[id]);
+    }
+  })
+
+  return result;
+}
+
 // getInterview takes in an object that contains the interviewer 
 // returns a new object containing the interview data 
 // otherwise, returns null 
