@@ -17,7 +17,7 @@ export default function Application(props) {
   const setDay = day => setState({ ...state, day });
 
   useEffect(() => {
-    Promise.all([ //return here?? i overheard things
+    Promise.all([ 
       axios.get("http://localhost:8001/api/days"),
       axios.get("http://localhost:8001/api/appointments"),
       axios.get("http://localhost:8001/api/interviewers")
@@ -35,6 +35,26 @@ export default function Application(props) {
 
   const interviewers = getInterviewersForDay(state, state.day);
 
+  function bookInterview(id, interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    return axios({
+      method: 'put',
+      url: `http://localhost:8001/api/appointments/${id}`,
+      data: appointment
+    })
+      .then((response) => {
+        setState({ ...state, appointments });
+
+      });
+  }
+
   const schedule = appointments.map((appointment) => {
 
     const interview = getInterview(state, appointment.interview);
@@ -45,9 +65,12 @@ export default function Application(props) {
         time={appointment.time}
         interview={interview}
         interviewers={interviewers}
+        bookInterview={bookInterview}
       />
     );
   })
+
+
 
   return (
     <main className="layout">
