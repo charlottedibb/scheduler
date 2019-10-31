@@ -45,7 +45,7 @@ export default function Form(props) {
           /> 
         </form>
         <InterviewerList 
-        interviewers={[]} // was props.interviewers (set to temp empty array lmao)
+        interviewers={props.interviewers}
         interviewer={interviewer} 
         setInterviewer={setInterviewer} />
       </section>
