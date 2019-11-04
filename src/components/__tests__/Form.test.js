@@ -21,9 +21,11 @@ describe("Form", () => {
   });
 
   it("renders with initial student name", () => {
-    const { getByTestId } = render(
+    const { getByPlaceholderText } = render(
       <Form interviewers={interviewers} name="ya girl" />
     );
-    expect(getByTestId("student-name-input")).toHaveValue("ya girl");
+    expect(getByPlaceholderText("Enter Student Name")).toHaveValue("ya girl");
   });
+
+  
 });
