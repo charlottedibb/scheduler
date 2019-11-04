@@ -18,7 +18,11 @@ function reducer(state, action) {
     }
   }
   if (action.type === SET_INTERVIEW) {
-    return { ...state, appointments: action.appointments }
+    return {
+      ...state,
+      days: state.days, //not sure if this is best practice
+      appointments: action.appointments
+    }
   }
   throw new Error(
     `Tried to reduce with unsupported action type: ${action.type}`
@@ -62,17 +66,29 @@ export default function useApplicationData() {
       ...state.appointments[id],
       interview: { ...interview }
     };
+
     // will use "appointments" to update state once axios request is complete
     const appointments = {
       ...state.appointments,
       [id]: appointment
     };
+
     return axios({
       method: 'put',
       url: `http://localhost:8001/api/appointments/${id}`,
       data: appointment
     })
       .then(() => {
+        //updates days state - not sure if this is best practice
+        state.days.map(day => {
+          if (day.name !== state.day) {
+            return day;
+          }
+          return {
+            ...day,
+            spots: day.spots--
+          }
+        })
         dispatch({ type: SET_INTERVIEW, appointments });
       });
   }
@@ -93,6 +109,16 @@ export default function useApplicationData() {
 
     return axios.delete(`http://localhost:8001/api/appointments/${id}`)
       .then(() => {
+        //updates days state - not sure if this is best practice
+        state.days.map(day => {
+          if (day.name !== state.day) {
+            return day;
+          }
+          return {
+            ...day,
+            spots: day.spots++
+          }
+        })
         dispatch({ type: SET_INTERVIEW, appointments });
       });
   }
