@@ -18,10 +18,6 @@ function reducer(state, action) {
     }
   }
   if (action.type === SET_INTERVIEW) {
-    //updating days
-    //if the interview id is in the days array
-    //check if its interview data exists
-    //if it does exist, add/subtract 1, depending on if the action.interview is null or not
     const appointment = {
       ...state.appointments[action.id],
       interview: action.interview ? { ...action.interview } : null
@@ -40,7 +36,7 @@ function reducer(state, action) {
       //start counter at zero
       let spotsTaken = 0;
       for (const apptId of day.appointments) {
-        //if interview is not null
+        //if interview data is not null
         //increase spots taken counter by one
         if (appointments[apptId].interview) {
           spotsTaken = spotsTaken + 1;
@@ -95,8 +91,7 @@ export default function useApplicationData() {
   }, [])
 
   // called with interview and interview id from save function
-  // makes put request to add interview to database
-  // then sets state
+  // makes put request to add interview to database, then dispatch to set state
   function bookInterview(id, interview) {
     // will use "appointment" as the data in the axios put request
     const appointment = {
@@ -118,16 +113,6 @@ export default function useApplicationData() {
   function cancelInterview(id) {
     return axios.delete(`http://localhost:8001/api/appointments/${id}`)
       .then(() => {
-        //updates days state - not sure if this is best practice
-        // state.days.map(day => {
-        //   if (day.name !== state.day) {
-        //     return day;
-        //   }
-        //   return {
-        //     ...day,
-        //     spots: day.spots++
-        //   }
-        // })
         dispatch({ type: SET_INTERVIEW, id, interview: null });
       });
   }
