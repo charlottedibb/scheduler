@@ -18,10 +18,47 @@ function reducer(state, action) {
     }
   }
   if (action.type === SET_INTERVIEW) {
+    //updating days
+    //if the interview id is in the days array
+    //check if its interview data exists
+    //if it does exist, add/subtract 1, depending on if the action.interview is null or not
+    const appointment = {
+      ...state.appointments[action.id],
+      interview: action.interview ? { ...action.interview } : null
+    };
+    const appointments = {
+      ...state.appointments,
+      [action.id]: appointment
+    };
+
+    const days = state.days.map(day => {
+      //if appointment id not in day's array of appointments
+      //return unchanged
+      if (!day.appointments.includes(action.id)) {
+        return day;
+      }
+      //start counter at zero
+      let spotsTaken = 0;
+      for (const apptId of day.appointments) {
+        //if interview is not null
+        //increase spots taken counter by one
+        if (appointments[apptId].interview) {
+          spotsTaken = spotsTaken + 1;
+        }
+      }
+      //set spots to length of appointments array minus spots taken
+      const spots = day.appointments.length - spotsTaken;
+      //return updated state object for that day 
+      return {
+        ...day,
+        spots
+      }
+    })
+
     return {
       ...state,
-      days: state.days, //not sure if this is best practice
-      appointments: action.appointments
+      days,
+      appointments
     }
   }
   throw new Error(
@@ -66,60 +103,32 @@ export default function useApplicationData() {
       ...state.appointments[id],
       interview: { ...interview }
     };
-
-    // will use "appointments" to update state once axios request is complete
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-
     return axios({
       method: 'put',
       url: `http://localhost:8001/api/appointments/${id}`,
       data: appointment
     })
       .then(() => {
-        //updates days state - not sure if this is best practice
-        state.days.map(day => {
-          if (day.name !== state.day) {
-            return day;
-          }
-          return {
-            ...day,
-            spots: day.spots--
-          }
-        })
-        dispatch({ type: SET_INTERVIEW, appointments });
+        dispatch({ type: SET_INTERVIEW, id, interview });
       });
   }
 
-  // uses the appointment id to find the right appointment slot 
+  // uses the appointment id to find the right appointment slot
   // and set its interview data to null
   function cancelInterview(id) {
-
-    const appointment = {
-      ...state.appointments[id],
-      interview: null // interview is set to null
-    };
-    // will use "appointments" to update state once axios request is complete
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-
     return axios.delete(`http://localhost:8001/api/appointments/${id}`)
       .then(() => {
         //updates days state - not sure if this is best practice
-        state.days.map(day => {
-          if (day.name !== state.day) {
-            return day;
-          }
-          return {
-            ...day,
-            spots: day.spots++
-          }
-        })
-        dispatch({ type: SET_INTERVIEW, appointments });
+        // state.days.map(day => {
+        //   if (day.name !== state.day) {
+        //     return day;
+        //   }
+        //   return {
+        //     ...day,
+        //     spots: day.spots++
+        //   }
+        // })
+        dispatch({ type: SET_INTERVIEW, id, interview: null });
       });
   }
 
