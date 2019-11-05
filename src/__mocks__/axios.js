@@ -1,5 +1,3 @@
-import { jsxEmptyExpression } from "@babel/types";
-
 const fixtures = {
   days: [
     {
@@ -56,6 +54,7 @@ const fixtures = {
 };
 
 export default {
+  defaults: { baseURL: ""},
   get: jest.fn(url => {
     if (url === "/api/days") {
       return Promise.resolve({
@@ -72,6 +71,7 @@ export default {
         data: fixtures.appointments
       });
     }
+
 
     if (url === "/api/interviewers") {
       return Promise.resolve({
