@@ -77,9 +77,9 @@ export default function useApplicationData() {
 
   useEffect(() => {
     Promise.all([
-      axios.get("http://localhost:8001/api/days"),
-      axios.get("http://localhost:8001/api/appointments"),
-      axios.get("http://localhost:8001/api/interviewers")
+      axios.get("/api/days"),
+      axios.get("/api/appointments"),
+      axios.get("/api/interviewers")
     ]).then((response) => {
       dispatch({
         type: SET_APPLICATION_DATA,
@@ -100,7 +100,7 @@ export default function useApplicationData() {
     };
     return axios({
       method: 'put',
-      url: `http://localhost:8001/api/appointments/${id}`,
+      url: `/api/appointments/${id}`,
       data: appointment
     })
       .then(() => {
@@ -111,7 +111,7 @@ export default function useApplicationData() {
   // uses the appointment id to find the right appointment slot
   // and set its interview data to null
   function cancelInterview(id) {
-    return axios.delete(`http://localhost:8001/api/appointments/${id}`)
+    return axios.delete(`/api/appointments/${id}`)
       .then(() => {
         dispatch({ type: SET_INTERVIEW, id, interview: null });
       });
