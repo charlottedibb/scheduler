@@ -8,7 +8,8 @@ import {
   prettyDOM,
   getAllByTestId,
   getByAltText,
-  getByPlaceholderText
+  getByPlaceholderText,
+  queryByText
 }
   from "@testing-library/react";
 
@@ -44,15 +45,20 @@ describe("Application", () => {
 
     // Click the first interviewer in the list.
     fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
-    console.log(prettyDOM(appointment));
-
+    
     // Click the "Save" button on that same appointment.
     fireEvent.click(getByText(appointment, "Save"));
-
-
+    
     // Check that the element with the text "Saving" is displayed.
-    // Wait until the element with the text "Lydia Miller-Jones" is displayed.
-    // Check that the DayListItem with the text "Monday" also has the text "no spots remaining".
+    expect(getByText(appointment, "Saving")).toBeInTheDocument();
 
+    // Wait until the element with the text "Lydia Miller-Jones" is displayed.
+    await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
+
+    // Check that the DayListItem with the text "Monday" also has the text "no spots remaining".
+    const day = getAllByTestId(container, "day").find(day =>
+      queryByText(day, "Monday")
+    );
+    expect(getByText(day, "no spots remaining")).toBeInTheDocument();
   })
 })
