@@ -14,6 +14,7 @@ export function getAppointmentsForDay(state, day) {
     if (state.appointments[id]) {
       result.push(state.appointments[id]);
     }
+    return id;
   })
 
   return result;
@@ -34,6 +35,7 @@ export function getInterviewersForDay(state, day) {
     if (state.interviewers[id]) {
       result.push(state.interviewers[id]);
     }
+    return id;
   })
 
   return result;
