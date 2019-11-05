@@ -98,11 +98,7 @@ export default function useApplicationData() {
       ...state.appointments[id],
       interview: { ...interview }
     };
-    return axios({
-      method: 'put',
-      url: `/api/appointments/${id}`,
-      data: appointment
-    })
+    return axios.put(`/api/appointments/${id}`, appointment)
       .then(() => {
         dispatch({ type: SET_INTERVIEW, id, interview });
       });
