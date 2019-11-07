@@ -29,4 +29,19 @@ describe("Appointments", () => {
     cy.contains('.appointment__card--show', "Sylvia Palmer");
   })
 
+  it("should edit an interview", () => {
+    // Clicks the edit button for the existing appointment
+    cy.get('[alt="Edit"]').first().click({ force: true });
+
+    // Changes the name and interviewer
+    cy.get('[placeholder="Enter Student Name"]').clear().type("Ya Girl");
+    cy.get('[alt="Tori Malcolm"]').click();
+
+    // Clicks the save button
+    cy.contains("Save").click();
+
+    // Sees the edit to the appointment
+    cy.contains('.appointment__card--show', "Ya Girl");
+    cy.contains('.appointment__card--show', "Tori Malcolm");
+  })
 })
