@@ -4,8 +4,10 @@ Scheduler is a single page interview scheduling app built with React.
 
 ![gif of appointment creation](https://github.com/charcharmasonjar/scheduler/blob/master/public/images/createAppt.gif)
 
-Data is persisted by the API server using a PostgreSQL database. 
 Storybook, Jest tests, and Cypress were used in the development of the project.
+
+Data is persisted by the API server using a PostgreSQL database. 
+
 
 ![gif of appointment edit and delete](https://github.com/charcharmasonjar/scheduler/blob/master/public/images/editAppt.gif)
 
@@ -30,6 +32,14 @@ npm test
 ```sh
 npm run storybook
 ```
+
+## Technical Specifications
+- React
+- Webpack, Babel
+- Axios
+- Storybook, Webpack Dev Server, Jest, Testing Library
+
+The Scheduler client application was created using Create React App. Express is the basis for the Scheduler API server application.
 
 ## Dependencies
 - axios
