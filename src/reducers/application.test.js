@@ -7,6 +7,6 @@ describe("Application reducer", () => {
   it("should throw an error when given an unsupported type", () => {
     expect(() => reducer({}, { type: null })).toThrowError(
       "Tried to reduce with unsupported action type: null"
-    )
-  })
-})
+    );
+  });
+});

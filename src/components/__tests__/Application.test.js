@@ -10,8 +10,7 @@ import {
   getByAltText,
   getByPlaceholderText,
   queryByText
-}
-  from "@testing-library/react";
+} from "@testing-library/react";
 
 import Application from "components/Application";
 
@@ -20,13 +19,12 @@ import axios from "axios";
 afterEach(cleanup);
 
 describe("Application", () => {
-
   it("defaults to Monday and changes the schedule when a new day is selected", () => {
     const { getByText } = render(<Application />);
     return waitForElement(() => getByText("Monday")).then(() => {
       fireEvent.click(getByText("Tuesday"));
-      expect(getByText("Leopold Silvers")).toBeInTheDocument()
-    })
+      expect(getByText("Leopold Silvers")).toBeInTheDocument();
+    });
   });
 
   it("loads data, books an interview and reduces the spots remaining for the first day by 1", async () => {
@@ -58,9 +56,11 @@ describe("Application", () => {
     await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
 
     // Check that the DayListItem with the text "Monday" also has the text "no spots remaining".
-    const day = getAllByTestId(container, "day").find(day => queryByText(day, "Monday"));
+    const day = getAllByTestId(container, "day").find(day =>
+      queryByText(day, "Monday")
+    );
     expect(getByText(day, "no spots remaining")).toBeInTheDocument();
-  })
+  });
 
   it("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
     // 1. Render the Application.
@@ -71,11 +71,14 @@ describe("Application", () => {
 
     // 3. Click the trash icon (alt text="Delete") on that same appointment.
     const appointment = getAllByTestId(container, "appointment").find(
-      appointment => queryByText(appointment, "Archie Cohen"));
+      appointment => queryByText(appointment, "Archie Cohen")
+    );
     fireEvent.click(getByAltText(appointment, "Delete"));
 
     // 4. Check that the confirmation message is shown.
-    expect(getByText(appointment, "Delete the appointment?")).toBeInTheDocument();
+    expect(
+      getByText(appointment, "Delete the appointment?")
+    ).toBeInTheDocument();
 
     // 5. Click the confirm button.
     fireEvent.click(getByText(appointment, "Confirm"));
@@ -87,7 +90,9 @@ describe("Application", () => {
     await waitForElement(() => getByAltText(appointment, "Add"));
 
     // 8. Check that the DayListItem with the text "Monday" also has the text "2 spots remaining".
-    const day = getAllByTestId(container, "day").find(day => queryByText(day, "Monday"));
+    const day = getAllByTestId(container, "day").find(day =>
+      queryByText(day, "Monday")
+    );
     expect(getByText(day, "2 spots remaining")).toBeInTheDocument();
   });
 
@@ -100,7 +105,8 @@ describe("Application", () => {
 
     // 3. Click the edit icon on that same appointment.
     const appointment = getAllByTestId(container, "appointment").find(
-      appointment => queryByText(appointment, "Archie Cohen"));
+      appointment => queryByText(appointment, "Archie Cohen")
+    );
     fireEvent.click(getByAltText(appointment, "Edit"));
 
     // 4. Enter the name "Ya Girl" into the input with the placeholder "Enter Student Name".
@@ -124,7 +130,9 @@ describe("Application", () => {
     expect(getByText(appointment, "Sylvia Palmer")).toBeInTheDocument();
 
     // 10. Check that the DayListItem with the text "Monday" also has the text "1 spot remaining".
-    const day = getAllByTestId(container, "day").find(day => queryByText(day, "Monday"));
+    const day = getAllByTestId(container, "day").find(day =>
+      queryByText(day, "Monday")
+    );
     expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
   });
 
@@ -155,7 +163,9 @@ describe("Application", () => {
     expect(getByText(appointment, "Saving")).toBeInTheDocument();
 
     // 8. Wait until the element with the text "Could not save appointment" is displayed.
-    await waitForElement(() => getByText(appointment, "Could not save appointment."));
+    await waitForElement(() =>
+      getByText(appointment, "Could not save appointment.")
+    );
 
     // 9. Click on the x in that same element
     fireEvent.click(getByAltText(appointment, "Close"));
@@ -164,7 +174,9 @@ describe("Application", () => {
     await waitForElement(() => getByAltText(appointment, "Add"));
 
     // 11. Check that the DayListItem with the text "Monday" also has the text "1 spot remaining".
-    const day = getAllByTestId(container, "day").find(day => queryByText(day, "Monday"));
+    const day = getAllByTestId(container, "day").find(day =>
+      queryByText(day, "Monday")
+    );
     expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
   });
 
@@ -179,11 +191,14 @@ describe("Application", () => {
 
     // 3. Click the trash icon (alt text="Delete") on that same appointment.
     const appointment = getAllByTestId(container, "appointment").find(
-      appointment => queryByText(appointment, "Archie Cohen"));
+      appointment => queryByText(appointment, "Archie Cohen")
+    );
     fireEvent.click(getByAltText(appointment, "Delete"));
 
     // 4. Check that the confirmation message is shown.
-    expect(getByText(appointment, "Delete the appointment?")).toBeInTheDocument();
+    expect(
+      getByText(appointment, "Delete the appointment?")
+    ).toBeInTheDocument();
 
     // 5. Click the confirm button.
     fireEvent.click(getByText(appointment, "Confirm"));
@@ -192,7 +207,9 @@ describe("Application", () => {
     expect(getByText(appointment, "Deleting")).toBeInTheDocument();
 
     // 8. Wait until the element with the text "Could not save appointment" is displayed.
-    await waitForElement(() => getByText(appointment, "Could not delete appointment."));
+    await waitForElement(() =>
+      getByText(appointment, "Could not delete appointment.")
+    );
 
     // 9. Click on the x in that same element
     fireEvent.click(getByAltText(appointment, "Close"));
@@ -201,9 +218,9 @@ describe("Application", () => {
     await waitForElement(() => getByText(container, "Archie Cohen"));
 
     // 9. Check that the DayListItem with the text "Monday" also has the text "1 spot remaining".
-    const day = getAllByTestId(container, "day").find(day => queryByText(day, "Monday"));
+    const day = getAllByTestId(container, "day").find(day =>
+      queryByText(day, "Monday")
+    );
     expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
-
   });
-
-})
+});

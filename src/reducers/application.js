@@ -1,7 +1,6 @@
-
 export default function reducer(state, action) {
   if (action.type === SET_DAY) {
-    return { ...state, day: action.day }
+    return { ...state, day: action.day };
   }
   if (action.type === SET_APPLICATION_DATA) {
     return {
@@ -9,7 +8,7 @@ export default function reducer(state, action) {
       days: action.days, //array of days
       appointments: action.appointments, //appointment objects
       interviewers: action.interviewers //interviewer objects
-    }
+    };
   }
   if (action.type === SET_INTERVIEW) {
     const appointment = {
@@ -38,26 +37,24 @@ export default function reducer(state, action) {
       }
       //set spots to length of appointments array minus spots taken
       const spots = day.appointments.length - spotsTaken;
-      //return updated state object for that day 
+      //return updated state object for that day
       return {
         ...day,
         spots
-      }
-    })
+      };
+    });
 
     return {
       ...state,
       days,
       appointments
-    }
+    };
   }
   throw new Error(
     `Tried to reduce with unsupported action type: ${action.type}`
-  )
+  );
 }
 
 export const SET_DAY = "SET_DAY";
 export const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
 export const SET_INTERVIEW = "SET_INTERVIEW";
-
-

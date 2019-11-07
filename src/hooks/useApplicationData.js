@@ -7,32 +7,31 @@ import reducer, {
 } from "reducers/application";
 
 export default function useApplicationData() {
-
   const [state, dispatch] = useReducer(reducer, {
     day: "Monday",
     days: [],
     appointments: {},
     interviewers: {}
-  })
+  });
 
-  const setDay = function (day) {
+  const setDay = function(day) {
     dispatch({ type: SET_DAY, day });
-  }
+  };
 
   useEffect(() => {
     Promise.all([
       axios.get("/api/days"),
       axios.get("/api/appointments"),
       axios.get("/api/interviewers")
-    ]).then((response) => {
+    ]).then(response => {
       dispatch({
         type: SET_APPLICATION_DATA,
         days: response[0].data, //array of days
         appointments: response[1].data, //appointment objects
         interviewers: response[2].data //interviewer objects
-      })
-    })
-  }, [])
+      });
+    });
+  }, []);
 
   // called with interview and interview id from save function
   // makes put request to add interview to database, then dispatch to set state
@@ -42,19 +41,17 @@ export default function useApplicationData() {
       ...state.appointments[id],
       interview: { ...interview }
     };
-    return axios.put(`/api/appointments/${id}`, appointment)
-      .then(() => {
-        dispatch({ type: SET_INTERVIEW, id, interview });
-      });
+    return axios.put(`/api/appointments/${id}`, appointment).then(() => {
+      dispatch({ type: SET_INTERVIEW, id, interview });
+    });
   }
 
   // uses the appointment id to find the right appointment slot
   // and set its interview data to null
   function cancelInterview(id) {
-    return axios.delete(`/api/appointments/${id}`)
-      .then(() => {
-        dispatch({ type: SET_INTERVIEW, id, interview: null });
-      });
+    return axios.delete(`/api/appointments/${id}`).then(() => {
+      dispatch({ type: SET_INTERVIEW, id, interview: null });
+    });
   }
 
   return {
@@ -62,5 +59,5 @@ export default function useApplicationData() {
     setDay,
     bookInterview,
     cancelInterview
-  }
+  };
 }

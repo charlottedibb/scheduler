@@ -4,7 +4,7 @@ export default function useVisualMode(initial) {
   //sets the mode state with the intital mode passed in
   const [mode, setMode] = useState(initial);
 
-  // initializes history as an array with the intial mode pased in 
+  // initializes history as an array with the intial mode pased in
   const [history, setHistory] = useState([initial]);
 
   function transition(mode, replace) {
@@ -27,5 +27,5 @@ export default function useVisualMode(initial) {
     mode,
     transition,
     back
-  }
+  };
 }

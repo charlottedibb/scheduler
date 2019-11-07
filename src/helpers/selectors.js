@@ -1,4 +1,3 @@
-
 export function getAppointmentsForDay(state, day) {
   const result = [];
 
@@ -15,7 +14,7 @@ export function getAppointmentsForDay(state, day) {
       result.push(state.appointments[id]);
     }
     return id;
-  })
+  });
 
   return result;
 }
@@ -36,19 +35,19 @@ export function getInterviewersForDay(state, day) {
       result.push(state.interviewers[id]);
     }
     return id;
-  })
+  });
 
   return result;
 }
 
-// getInterview takes in an object that contains the interviewer 
-// returns a new object containing the interview data 
-// otherwise, returns null 
+// getInterview takes in an object that contains the interviewer
+// returns a new object containing the interview data
+// otherwise, returns null
 
 // example output:
-// {  
+// {
 //   "student": "Lydia Miller-Jones",
-//   "interviewer": {  
+//   "interviewer": {
 //     "id": 1,
 //     "name": "Sylvia Palmer",
 //     "avatar": "https://i.imgur.com/LpaY82x.png"
