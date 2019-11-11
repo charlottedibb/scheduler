@@ -15,6 +15,10 @@ Data is persisted by the API server using a PostgreSQL database.
 
 Install dependencies with `npm install`.
 
+Fork and clone the scheduler-api and follow its set-up instructions:
+
+https://github.com/lighthouse-labs/scheduler-api
+
 ## Running Webpack Development Server
 
 ```sh
